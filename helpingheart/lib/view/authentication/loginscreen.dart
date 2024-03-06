@@ -1,7 +1,12 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
+import 'package:helpingheart/view/authentication/forgetpassword.dart';
+import 'package:helpingheart/view/pages/Dashboard.dart';
+import 'package:helpingheart/view/pages/food_donation.dart';
+import 'package:helpingheart/view/pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +31,7 @@ class _loginscreenState extends State<loginscreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Container(
-            height: 550.0,
+            height: 600,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
@@ -118,6 +123,7 @@ class _loginscreenState extends State<loginscreen> {
                               TextButton(
                                 onPressed: () {
                                   // Add functionality here for the forget password action
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>forgetpassword()));
                                 },
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -145,35 +151,60 @@ class _loginscreenState extends State<loginscreen> {
                           width: double.infinity,
                           child:ElevatedButton(
                             onPressed: () async {
-        
-                              var username = _unm.text.toString();
-                              var pass = _upass.text.toString();
-        
-                              Uri url = Uri.parse("http://localhost/helping_hearts/HHApi/login.php");
-                              var param = {"contact" : username,"pass" : pass};
-        
-                              var responce = await http.post(url,body: param);
-                              if(responce.statusCode==200)
-                                {
-                                  //success
-                                  var json = jsonDecode(responce.body.toString());
-                                  print(json["status"]);
-        
-                                }
-                              else
-                                {
-                                  print("error");
-        
-                                }
-        
-        
-        
+                                    var username = _unm.text.toString();
+                                    var pass = _upass.text.toString();
+
+                                    Uri url = Uri.parse("http://192.168.1.32/helping_hearts/HHApi/login.php");
+                                    var param = {"contact":username,"password":pass};
+                                    var responce = await http.post(url,body: param,);
+                                   // print(responce.statusCode);
+                                    if(responce.statusCode==200)
+                                    {
+
+                                      var json = jsonDecode(responce.body.toString());
+
+                                      if(json["status"]=="Success")
+                                        {
+                                          var unm = json["mydata"]["name"];
+                                          var uid = json["mydata"]["user_id"];
+                                          var uemail = json["mydata"]["email"];
+                                            SharedPreferences pref = await SharedPreferences.getInstance();
+                                            pref.setString("isLogin", "yes");
+                                          pref.setString("username", unm);
+                                          pref.setString("userid", uid);
+                                          pref.setString("useremail", uemail);
+
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Dashboard()));
+                                        }
+                                      else
+                                      {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('Invalid User.'),
+                                          ),
+                                        );
+
+                                      }
+
+
+                                    }
+                                    else
+                                    {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Invalid Access.'),
+                                        ),
+                                      );
+
+                                    }
+
+
         
                             },
                             style: ElevatedButton.styleFrom(
                               //maximumSize: Size(60,20),
-                              primary: StyleResources.btncolor, // background color
-                              onPrimary: StyleResources.btntext, // text color
+                              backgroundColor: StyleResources.btncolor, // background color
+                              foregroundColor: StyleResources.btntext, // text color
                               elevation: StyleResources.btnelevation, // button's elevation when it's pressed
                             ),
                             child: const Text('Login'),

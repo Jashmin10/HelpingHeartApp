@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:helpingheart/view/authentication/forgetpassword.dart';
-import 'package:helpingheart/view/authentication/login.dart';
 import 'package:helpingheart/view/authentication/loginscreen.dart';
-import 'package:helpingheart/view/authentication/registration.dart';
-import 'package:helpingheart/view/food_donation.dart';
 import 'package:helpingheart/view/pages/SpleceScreen.dart';
 
 void main() {
@@ -17,13 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Helping Hearts',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: forgetpassword(),
+      home:
+        //SpleceScreen(),
+      loginscreen()
     );
   }
 }

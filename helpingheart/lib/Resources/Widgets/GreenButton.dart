@@ -16,8 +16,8 @@ class GreenButton extends StatelessWidget
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               //maximumSize: Size(60,20),
-              primary: StyleResources.btncolor, // background color
-              onPrimary: StyleResources.btntext, // text color
+              backgroundColor: StyleResources.btncolor, // background color
+              foregroundColor: StyleResources.btntext, // text color
               elevation: StyleResources.btnelevation, // button's elevation when it's pressed
             ),
             child: const Text('Login'),

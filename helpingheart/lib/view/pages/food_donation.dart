@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../Resources/StyleResources.dart';
+import 'package:helpingheart/Resources/StyleResources.dart';
 
 class food_donation extends StatefulWidget {
   const food_donation({super.key});
@@ -119,8 +118,8 @@ class _food_donationState extends State<food_donation> {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   //maximumSize: Size(60,20),
-                  primary: StyleResources.btncolor, // background color
-                  onPrimary: StyleResources.btntext, // text color
+                  backgroundColor: StyleResources.btncolor, // background color
+                  foregroundColor: StyleResources.btntext, // text color
                   elevation: StyleResources.btnelevation, // button's elevation when it's pressed
                 ),
                 child: const Text('Procced'),

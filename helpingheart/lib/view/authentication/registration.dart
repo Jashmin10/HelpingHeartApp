@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:helpingheart/Resources/StyleResources.dart';
 
-import '../../Resources/StyleResources.dart';
+
 
 class registration extends StatefulWidget {
   const registration({super.key});
@@ -132,8 +133,8 @@ class _registrationState extends State<registration> {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            primary: StyleResources.btncolor, // background color
-                            onPrimary: StyleResources.btntext, // text color
+                            backgroundColor: StyleResources.btncolor, // background color
+                            foregroundColor: StyleResources.btntext, // text color
                             elevation: StyleResources.btnelevation, // button's elevation when it's pressed
                           ),
                           child: const Text('Login'),
