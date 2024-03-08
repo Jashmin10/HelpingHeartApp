@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:helpingheart/view/authentication/change_password.dart';
 import 'package:helpingheart/view/authentication/loginscreen.dart';
+import 'package:helpingheart/view/authentication/registration.dart';
+import 'package:helpingheart/view/pages/Dashboard.dart';
 import 'package:helpingheart/view/pages/SpleceScreen.dart';
+import 'package:helpingheart/view/pages/home.dart';
+
+import 'package:helpingheart/view/pages/profile.dart';
+import 'package:helpingheart/view/pages/sub_category.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,8 +28,14 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home:
-        //SpleceScreen(),
-      loginscreen()
+        //sub_category(),
+        //home(),
+        //change_password(),
+        SpleceScreen(),
+      //loginscreen(),
+      //Dashboard(),
+      //profile(),
+      //registration(),
     );
   }
 }

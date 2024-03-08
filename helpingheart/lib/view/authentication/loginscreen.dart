@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
+import 'package:helpingheart/Resources/UrlResources.dart';
 import 'package:helpingheart/view/authentication/forgetpassword.dart';
+import 'package:helpingheart/view/authentication/registration.dart';
 import 'package:helpingheart/view/pages/Dashboard.dart';
 import 'package:helpingheart/view/pages/food_donation.dart';
 import 'package:helpingheart/view/pages/home.dart';
@@ -31,7 +33,7 @@ class _loginscreenState extends State<loginscreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Container(
-            height: 600,
+            height: 700,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
@@ -69,7 +71,7 @@ class _loginscreenState extends State<loginscreen> {
                         keyboardType: TextInputType.text,
                         controller: _unm,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.add_photo_alternate_outlined),
+                          prefixIcon: Icon(Icons.add_call),
                           hintText: 'Contact number',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.only(
@@ -90,7 +92,7 @@ class _loginscreenState extends State<loginscreen> {
                             keyboardType: TextInputType.text,
                             controller: _upass,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.add_moderator_outlined),
+                              prefixIcon: Icon(Icons.lock),
                               hintText: 'Password',
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green),
@@ -104,21 +106,6 @@ class _loginscreenState extends State<loginscreen> {
                           SizedBox(height: 10), // Spacer for separation
                           Row(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  // Add your logic for the "Remember me" checkbox here
-                                },
-                                child: Checkbox(
-                                  value: false, // Set initial value accordingly
-                                  onChanged: (value) {
-                                    // Add your logic for the "Remember me" checkbox here
-                                  },
-                                ),
-                              ),
-                              Text(
-                                'Remember me',
-                                style: TextStyle(fontSize: 16),
-                              ),
                               Spacer(), // Spacer to push the "Forget Password" text to the right edge
                               TextButton(
                                 onPressed: () {
@@ -154,7 +141,7 @@ class _loginscreenState extends State<loginscreen> {
                                     var username = _unm.text.toString();
                                     var pass = _upass.text.toString();
 
-                                    Uri url = Uri.parse("http://192.168.1.32/helping_hearts/HHApi/login.php");
+                                    Uri url = Uri.parse(UrlResources.Login_URL);
                                     var param = {"contact":username,"password":pass};
                                     var responce = await http.post(url,body: param,);
                                    // print(responce.statusCode);
@@ -197,9 +184,6 @@ class _loginscreenState extends State<loginscreen> {
                                       );
 
                                     }
-
-
-        
                             },
                             style: ElevatedButton.styleFrom(
                               //maximumSize: Size(60,20),
@@ -213,35 +197,34 @@ class _loginscreenState extends State<loginscreen> {
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-        
-                            TextSpan(
-                              text: "Don't have an account? ",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16,
-                              ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account?",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18,
                             ),
-        
-                          WidgetSpan(child:
+                          ),
                           TextButton(
-                              onPressed: (){},
-                              style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              ),
-                              child: Text("Sign up",
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => registration()));
+                            },
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                            ),
+                            child: Text(
+                              "Sign up",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.green.shade900,
+                                fontSize: 16,
                                 decoration: TextDecoration.underline,
-                              ),)
+                              ),
+                            ),
                           )
-                          ),
-                          ],
-                        ),
-        
+                        ],
                       ),
                     )
                     // Add your TextField, Checkbox, "Forget Password?" Row, and ElevatedButton here

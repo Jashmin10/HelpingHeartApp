@@ -28,7 +28,25 @@ class _forgetpasswordState extends State<forgetpassword> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
             Container(
-            padding: EdgeInsets.fromLTRB(60, 20, 60, 10),
+              margin: EdgeInsets.fromLTRB(0, 300
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  , 0, 0),
+            //padding: EdgeInsets.fromLTRB(60, 20, 60, 10),
             child: Text(
               'Forget Password ?',
               style: TextStyle(

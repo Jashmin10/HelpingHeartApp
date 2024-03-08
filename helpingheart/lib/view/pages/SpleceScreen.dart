@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:helpingheart/view/authentication/loginscreen.dart';
+import 'package:helpingheart/view/pages/Dashboard.dart';
 import 'package:helpingheart/view/pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,7 @@ class _SpleceScreenState extends State<SpleceScreen> {
     if(pref.containsKey("isLogin"))
       {
         Navigator.of(context).pop();
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>home()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Dashboard()));
 
       }
     else
@@ -44,7 +45,7 @@ class _SpleceScreenState extends State<SpleceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset("images/splash_screen.png"),
+        child: Image.asset("assets/images/splash_screen.png"),
       ),
 
     );

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:helpingheart/Resources/StyleResources.dart';
 import 'package:helpingheart/view/pages/home.dart';
 import 'package:helpingheart/view/pages/my_donation.dart';
+import 'package:helpingheart/view/pages/my_home.dart';
+import 'package:helpingheart/view/pages/profile.dart';
+import 'package:helpingheart/view/pages/shopping.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -18,12 +22,14 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(title: Text("Dashboard"),),
       body: Column(
         children: [
-          Expanded(child: SingleChildScrollView(
-            child:(selected==0)?home():(selected==1)?my_donation():(selected==2)?Text("Shopping"):Text("Profile"),
-          )),
+          Expanded(
+              child:
+              (selected == 0) ? home()  : (selected == 1) ? my_donation() : (selected == 2) ? shopping() : profile()),
           Container(
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.all(10.0),
+            color: StyleResources.txtgreen,
+            padding: EdgeInsets.all(10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -55,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
                       SizedBox(
                         height: 5.0,
                       ),
-                      Text("Home")
+                      Text("My Donation")
                     ],
                   ),
                 ),
@@ -67,11 +73,11 @@ class _DashboardState extends State<Dashboard> {
                   },
                   child: Column(
                     children: [
-                      Icon(Icons.shop),
+                      Icon(Icons.add_shopping_cart),
                       SizedBox(
                         height: 5.0,
                       ),
-                      Text("Home")
+                      Text("Shopping")
                     ],
                   ),
                 ),
@@ -83,11 +89,11 @@ class _DashboardState extends State<Dashboard> {
                   },
                   child: Column(
                     children: [
-                      Icon(Icons.verified_user),
+                      Icon(Icons.account_circle_sharp),
                       SizedBox(
                         height: 5.0,
                       ),
-                      Text("Home")
+                      Text("Profile")
                     ],
                   ),
                 )

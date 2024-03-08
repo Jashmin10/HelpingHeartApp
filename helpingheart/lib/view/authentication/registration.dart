@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
+import 'package:helpingheart/Resources/UrlResources.dart';
+import 'package:helpingheart/view/authentication/loginscreen.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -11,6 +17,9 @@ class registration extends StatefulWidget {
 }
 
 class _registrationState extends State<registration> {
+  TextEditingController _nm = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _pass = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +32,8 @@ class _registrationState extends State<registration> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
            Container(
-          padding: EdgeInsets.fromLTRB(60, 20, 60, 10),
+             // margin: EdgeInsets.fromLTRB(0, 150, 0, 0),
+          padding: EdgeInsets.fromLTRB(60, 30, 60, 10),
           child: Text(
           'Register',
           style: TextStyle(
@@ -44,8 +54,10 @@ class _registrationState extends State<registration> {
           Container(
             padding:EdgeInsets.fromLTRB(60, 20, 60, 10),
             child: TextField(
+              keyboardType: TextInputType.text,
+              controller: _nm,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.add_photo_alternate_outlined),
+                prefixIcon: Icon(Icons.account_circle_sharp),
                 hintText: 'User Name',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.only(
@@ -59,8 +71,10 @@ class _registrationState extends State<registration> {
           Container(
             padding:EdgeInsets.fromLTRB(60, 20, 60, 10),
             child: TextField(
+              keyboardType: TextInputType.text,
+              controller: _email,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.add_link),
+                prefixIcon: Icon(Icons.email),
                 hintText: 'E-mail',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.only(
@@ -77,9 +91,11 @@ class _registrationState extends State<registration> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
+                  keyboardType: TextInputType.text,
+                  controller: _pass,
                   obscureText: true,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.add_moderator_outlined),
+                    prefixIcon: Icon(Icons.lock),
                     hintText: 'Password',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.green),
@@ -90,48 +106,46 @@ class _registrationState extends State<registration> {
                     ),
                   ),
                 ),
-
-                SizedBox(height: 10), // Spacer for separation
-                Row(
-                  children: [
-                    Checkbox(
-                      value: false, // Set initial value accordingly
-                      onChanged: (value) {
-                        // Add your logic for the "Remember me" checkbox here
-                      },
-                    ),
-                    Text(
-                      'Remember me',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Spacer(), // Spacer to push the "Forget Password" text to the right edge
-                    TextButton(
-                      onPressed: () {
-                        // Add functionality here for the forget password action
-                      },
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                      ),
-                      child: Text(
-                        'Forget Password ?',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green.shade900,
-                          // Change the color to your preference
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
                 Container(
-                 // padding: EdgeInsets.fromLTRB(60, 20, 60, 10),
+                 padding: EdgeInsets.fromLTRB(40, 30, 40, 10),
                   child: Column(
                     children: [
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            var name = _nm.text.toString();
+                            var email = _email.text.toString();
+                            var pass = _pass.text.toString();
+
+                            Uri url = Uri.parse(UrlResources.Register_URL);
+                            var param = {"name":name,"email":email,"password":pass};
+                            var responce = await http.post(url,body: param,);
+
+                            if(responce.statusCode==200)
+                              {
+                                var json = jsonDecode(responce.body.toString());
+
+                                if(json["status"]=="Success")
+                                  {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(json["message"]),
+                                      ),
+                                    );
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>loginscreen()));
+                                  }
+                                else
+                                  {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(json["message"]),
+                                      ),
+                                    );
+                                  }
+                              }
+
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: StyleResources.btncolor, // background color
                             foregroundColor: StyleResources.btntext, // text color
@@ -142,8 +156,7 @@ class _registrationState extends State<registration> {
                       ),
                     ],
                   ),
-                )
-
+                ),
               ],
             ),
           ),

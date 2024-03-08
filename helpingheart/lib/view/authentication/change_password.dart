@@ -29,7 +29,8 @@ class _change_passwordState extends State<change_password> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(30,100,30,30),
+                  margin: EdgeInsets.fromLTRB(0, 150, 0, 0),
+                  //padding: EdgeInsets.fromLTRB(30,100,30,30),
                   child: Text(
                     'Change Password',
                     style: TextStyle(
@@ -39,7 +40,7 @@ class _change_passwordState extends State<change_password> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.fromLTRB(60, 20, 60, 20),
                   child: Column(
@@ -50,7 +51,7 @@ class _change_passwordState extends State<change_password> {
                         obscureText: true,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.add_moderator_outlined),
+                          prefixIcon: Icon(Icons.lock),
                           hintText: 'Current Password',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.green),
@@ -64,7 +65,7 @@ class _change_passwordState extends State<change_password> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.fromLTRB(60, 20, 60, 20),
                   child: Column(
@@ -75,7 +76,7 @@ class _change_passwordState extends State<change_password> {
                         obscureText: true,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.add_moderator_outlined),
+                          prefixIcon: Icon(Icons.lock),
                           hintText: 'New Password',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.green),
@@ -89,7 +90,7 @@ class _change_passwordState extends State<change_password> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.fromLTRB(60, 20, 60, 20),
                   child: Column(
@@ -100,7 +101,7 @@ class _change_passwordState extends State<change_password> {
                         obscureText: true,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.add_moderator_outlined),
+                          prefixIcon: Icon(Icons.lock),
                           hintText: 'Confirm Password',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.green),
@@ -114,7 +115,7 @@ class _change_passwordState extends State<change_password> {
                     ],
                   ),
                 ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 10,),
                   Container(
                   padding: EdgeInsets.fromLTRB(60, 20, 60, 10),
     child: SizedBox(
