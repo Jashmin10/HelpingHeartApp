@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
 import 'package:helpingheart/view/authentication/change_password.dart';
 import 'package:helpingheart/view/authentication/loginscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class profile extends StatefulWidget {
   profile({Key? key}) : super(key: key);
@@ -70,7 +71,9 @@ class _ProfileState extends State<profile> {
 
             ListTile(
               title: Text('Logout'),
-              onTap: () {
+              onTap: () async{
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.clear();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => loginscreen()), // Replace LoginScreen with your login page

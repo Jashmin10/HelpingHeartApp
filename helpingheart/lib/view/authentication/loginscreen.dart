@@ -155,11 +155,16 @@ class _loginscreenState extends State<loginscreen> {
                                           var unm = json["mydata"]["name"];
                                           var uid = json["mydata"]["user_id"];
                                           var uemail = json["mydata"]["email"];
+                                          var ucontact = json["mydata"]["contact"];
                                             SharedPreferences pref = await SharedPreferences.getInstance();
                                             pref.setString("isLogin", "yes");
                                           pref.setString("username", unm);
                                           pref.setString("userid", uid);
                                           pref.setString("useremail", uemail);
+                                          pref.setString("userphone", ucontact);
+
+                                         var id = pref.getString("username");
+                                         print(id);
 
                                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Dashboard()));
                                         }

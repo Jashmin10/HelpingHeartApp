@@ -4,7 +4,10 @@ import 'package:helpingheart/view/authentication/loginscreen.dart';
 import 'package:helpingheart/view/authentication/registration.dart';
 import 'package:helpingheart/view/pages/Dashboard.dart';
 import 'package:helpingheart/view/pages/SpleceScreen.dart';
+import 'package:helpingheart/view/pages/categorypage.dart';
+import 'package:helpingheart/view/pages/donation_form.dart';
 import 'package:helpingheart/view/pages/home.dart';
+import 'package:helpingheart/view/pages/order.dart';
 
 import 'package:helpingheart/view/pages/profile.dart';
 import 'package:helpingheart/view/pages/sub_category.dart';
@@ -23,11 +26,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Helping Hearts',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home:
+        //donation_form(),
         //sub_category(),
         //home(),
         //change_password(),

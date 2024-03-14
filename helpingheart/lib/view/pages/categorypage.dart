@@ -1,19 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:helpingheart/Resources/UrlResources.dart';
 import 'package:helpingheart/view/pages/sub_category.dart';
-
-import '../../Resources/UrlResources.dart';
+import 'package:helpingheart/view/pages/subcategory.dart';
 import 'package:http/http.dart' as http;
 
-class shopping extends StatefulWidget {
-  const shopping({super.key});
+class categorypage extends StatefulWidget {
+  const categorypage({Key? key}) : super(key: key);
 
   @override
-  State<shopping> createState() => _shoppingState();
+  State<categorypage> createState() => _categorypageState();
 }
 
-class _shoppingState extends State<shopping> {
+class _categorypageState extends State<categorypage> {
   Future<List?>? alldata;
   var imgurl = UrlResources.catimg;
   Future<List?>?getdata()async{
@@ -27,7 +27,7 @@ class _shoppingState extends State<shopping> {
       var json = jsonDecode(responce.body.toString());
       // print(json["data"]);
       return json['data'];
-  }}
+    }}
 
   @override
   void initState() {
@@ -41,25 +41,35 @@ class _shoppingState extends State<shopping> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Shopping by Category'),
+        centerTitle: true,
+      ),
       body: FutureBuilder(
         future: alldata,
         builder: (context,snapshot)
         {
           if(snapshot.hasData)
-            {
-              if(snapshot.data!.length<=0)
-                {
-                  return Center(child: Text("No Data"),);
-                }
-              else{
-                return ListView.builder(
+          {
+            if(snapshot.data!.length<=0)
+              {
+                return Center(child: Text("No Data"),);
+              }
+            else
+              {
+                return GridView.builder(
+                  padding: EdgeInsets.all(16.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16.0,
+                    mainAxisSpacing: 16.0,
+                  ),
                   itemCount: snapshot.data!.length,
-                  itemBuilder: (context,index)
-                  {
+                  itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      padding: EdgeInsets.all(10),
                       child: Container(
-                        height: 100,
+                        height: 500,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: Colors.grey.shade200, // Background color
@@ -73,28 +83,33 @@ class _shoppingState extends State<shopping> {
                             ),
                           ],
                         ),
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15), // Image border radius
-                                  child: Image.network(imgurl + snapshot.data![index]["cat_img"].toString(),height: 150,width: 150,),
+                                  child: Image.network(
+                                    imgurl + snapshot.data![index]["cat_img"].toString(),
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,),
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Container(
+                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                                 child: Text(snapshot.data![index]["cat_name"].toString(),
-                                style: TextStyle(fontSize: 25),),
+                                  style: TextStyle(fontSize: 25),),
                               ),
                             ),
                             IconButton(
                               onPressed: () {
                                 // Handle right arrow button press
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>sub_category(catid:snapshot.data![index]["cat_id"].toString())));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>subcategory(catid:snapshot.data![index]["cat_id"].toString())));
                               },
                               icon: Icon(Icons.arrow_forward),
                             ),
@@ -105,7 +120,7 @@ class _shoppingState extends State<shopping> {
                   },
                 );
               }
-            }
+          }
           else{
             return Center(child: CircularProgressIndicator(),);
           }
@@ -115,4 +130,49 @@ class _shoppingState extends State<shopping> {
   }
 }
 
+class CategoryCard extends StatelessWidget {
+  final String name;
+  final IconData icon;
 
+  const CategoryCard({Key? key, required this.name, required this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          // Navigate to category products page
+          // You can implement this as per your app's navigation structure
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              icon,
+              size: 48.0,
+              color: Theme.of(context).primaryColor,
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              name,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: categorypage(),
+  ));
+}

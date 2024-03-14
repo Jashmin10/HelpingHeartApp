@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
+import 'package:helpingheart/Resources/UrlResources.dart';
 import 'package:helpingheart/view/authentication/loginscreen.dart';
 
 
@@ -82,7 +83,7 @@ class _forgetpasswordState extends State<forgetpassword> {
                             onPressed: () async {
                               var usermail = _mail.text.toString();
                               
-                              Uri url = Uri.parse("http://192.168.1.32/helping_hearts/HHapi/forget_password.php");
+                              Uri url = Uri.parse(UrlResources.Forget_Password);
                               var param={"email":usermail};
                               var response= await http.post(url, body: param);
                               if(response.statusCode==200){

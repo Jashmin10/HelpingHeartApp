@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/UrlResources.dart';
+import 'package:helpingheart/view/pages/products.dart';
 import 'package:http/http.dart' as http;
 
 class sub_category extends StatefulWidget {
@@ -15,19 +16,19 @@ class sub_category extends StatefulWidget {
 class _sub_categoryState extends State<sub_category> {
   Future<List?>? alldata;
   Future<List?>?getdata()async{
+    print(widget.catid);
 
     Uri url = Uri.parse(UrlResources.SubCategory_URL);
-    var responce = await http.get(url);
-    // print(responce.statusCode);
+    var responce = await http.post(url,body: {
+      "cat_id":widget.catid
+    });
+    print(responce.statusCode);
     if(responce.statusCode==200)
     {
-
+// print("object");
       var json = jsonDecode(responce.body.toString());
       // print(json["data"]);
       return json['data'];
-
-
-
     }}
 
   @override
@@ -77,14 +78,16 @@ class _sub_categoryState extends State<sub_category> {
                           children: [
                             Expanded(
                               child: Container(
-                                child: Text(snapshot.data![index]["subcat_name"].toString(),
+                                child: Text(snapshot.data![index]["name"].toString(),
                                   style: TextStyle(fontSize: 25),),
                               ),
                             ),
                             IconButton(
                               onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context)=>products(id: snapshot.data![index]["subcat_id"].toString(),))
+                                );
                                 // Handle right arrow button press
-                                //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>sub_category("catid":snapshot.data![index]["cat_id"].toString())));
                               },
                               icon: Icon(Icons.arrow_forward),
                             ),

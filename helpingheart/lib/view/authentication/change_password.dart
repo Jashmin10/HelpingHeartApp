@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
+import 'package:helpingheart/Resources/UrlResources.dart';
 import 'package:helpingheart/view/authentication/loginscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -131,7 +132,7 @@ class _change_passwordState extends State<change_password> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           var uid = prefs.getString("userid");
           print(uid);
-          Uri url = Uri.parse("http://192.168.1.32/helping_hearts/HHapi/change_password.php");
+          Uri url = Uri.parse(UrlResources.Change_Password);
           var param ={"userid":uid,"oldpass":currentpass,"newpass":newpass,};
           var responce = await http.post(url,body:param);
           if (responce.statusCode==200)

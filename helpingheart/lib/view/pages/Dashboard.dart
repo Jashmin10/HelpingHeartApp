@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:helpingheart/Resources/StyleResources.dart';
+import 'package:helpingheart/view/pages/categorypage.dart';
+import 'package:helpingheart/view/pages/donatelist.dart';
 import 'package:helpingheart/view/pages/home.dart';
 import 'package:helpingheart/view/pages/my_donation.dart';
 import 'package:helpingheart/view/pages/my_home.dart';
 import 'package:helpingheart/view/pages/profile.dart';
 import 'package:helpingheart/view/pages/shopping.dart';
+import 'package:helpingheart/view/pages/viewcart.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -19,12 +22,22 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Dashboard"),),
+      appBar: AppBar(title: Text("Dashboard"),
+      actions: [
+        IconButton(
+          onPressed: (){
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context)=>viewcart())
+            );
+          },
+          icon: Icon(Icons.add_shopping_cart),
+        )
+      ],),
       body: Column(
         children: [
           Expanded(
               child:
-              (selected == 0) ? home()  : (selected == 1) ? my_donation() : (selected == 2) ? shopping() : profile()),
+              (selected == 0) ? home()  : (selected == 1) ? donatelist(): (selected == 2) ? categorypage() : profile()),
           Container(
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.all(10.0),
